@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/usbBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="USB设备" />
+
+    <Button
+        android:id="@+id/serialBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="普通串口设备" />
+
+    <Button
+        android:id="@+id/idcSerialBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="公安串口设备" />
+
+    <Button
+        android:id="@+id/serialPortSettingBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="串口设置" />
+
+</LinearLayout>

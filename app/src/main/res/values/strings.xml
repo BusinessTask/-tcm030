@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">指纹SDK</string>
+    <string name="txt_error_permission">"权限检测失败，请检查应用权限设置"</string>
+</resources>
