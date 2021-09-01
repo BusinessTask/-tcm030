@@ -2,6 +2,7 @@ package com.eyecool.finger.demo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.usb.UsbDevice;
@@ -40,6 +41,11 @@ import java.io.IOException;
 public class UsbActivity extends BaseActivity {
 
     /* 应用间调试用*/
+    /**
+     * 指纹场景1登录 2注册
+     */
+    private int type = 0;
+    /* 应用间调试用*/
     private static final String TAG = UsbActivity.class.getSimpleName();
 
     private static final String BASE_PATH = Environment
@@ -73,7 +79,12 @@ public class UsbActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usb);
         mContext = this;
-
+        Intent intent = getIntent();
+        if (intent.hasExtra("type")) {
+            type = (int) intent.getSerializableExtra("type");
+        }
+        ToastUtils.showToast(this, type + ",aa");
+//  不能用         Bundle bundle = intent.getBundleExtra("type");
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setMessage("断开连接中...");
         mProgressDialog.setCancelable(false);
@@ -300,6 +311,8 @@ public class UsbActivity extends BaseActivity {
     }
 
     protected void enrollBtnClick() {
+
+
         if (!isDeviceReady()) {
             return;
         }
@@ -315,6 +328,17 @@ public class UsbActivity extends BaseActivity {
                         + (template == null ? 0 : template.length));
                 saveTemplateToDisk(template, TEMPLATE_PATH);
                 mTemplate = template;
+
+                if (type > 0) {
+                    String testStr = Base64.encodeToString(template, Base64.DEFAULT);
+                    Intent i = new Intent();
+                    i.putExtra("info", testStr);
+                    setResult(0x02, i);
+                    finish();
+                    return;
+                }
+
+
             }
 
             @Override
@@ -362,6 +386,9 @@ public class UsbActivity extends BaseActivity {
         }, 30000);
     }
 
+    /**
+     * 对比
+     */
     protected void verifyBtnClick() {
         if (!isDeviceReady()) {
             return;
@@ -383,6 +410,13 @@ public class UsbActivity extends BaseActivity {
 
                 if (result2.getStatus() >= 0) {
                     displayMessage("匹配成功 Score:" + result2.getScore());
+                    if (type > 0) {
+                        Intent i = new Intent();
+                        i.putExtra("info", fea);
+                        setResult(0x01, i);
+                        finish();
+                        return;
+                    }
                 } else {
                     displayMessage("匹配失败 Score:" + result2.getScore());
                 }
