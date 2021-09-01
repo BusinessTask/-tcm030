@@ -32,6 +32,7 @@ import com.eyecool.fp.util.USBUtil.Protocol;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 天诚盛业大容量存储指纹设备Demo
@@ -45,6 +46,7 @@ public class UsbActivity extends BaseActivity {
      * 指纹场景1登录 2注册
      */
     private int type = 0;
+    private final int padding = Base64.NO_WRAP;
     /* 应用间调试用*/
     private static final String TAG = UsbActivity.class.getSimpleName();
 
@@ -328,11 +330,34 @@ public class UsbActivity extends BaseActivity {
                         + (template == null ? 0 : template.length));
                 saveTemplateToDisk(template, TEMPLATE_PATH);
                 mTemplate = template;
+                String testStr = Base64.encodeToString(result.getTemplate(), padding);
 
+                StringBuilder logBuilder = new StringBuilder();
+                logBuilder.append("template-- " + testStr);
                 if (type > 0) {
-                    String testStr = Base64.encodeToString(template, Base64.DEFAULT);
+                    if (result.getCompressRawBytes() != null) {
+                        logBuilder.append(",getCompressRawBytes-- " + Base64.encodeToString(result.getCompressRawBytes(), padding));
+                    }
+                    if (result.getId() > 0) {
+                        logBuilder.append(",id=" + result.getId());
+                    }
+                    List<Integer> list = result.getIdList();
+                    if (list != null && list.size() > 0) {
+                        StringBuilder b = new StringBuilder();
+                        for (int i = 0; i < list.size(); i++) {
+                            b.append(list.get(i) + ",");
+                        }
+                        logBuilder.append(",idlist =" + b.toString());
+                    }
+
+                    if (result.getResult() != null) {
+                        logBuilder.append(",result:" + result.getResult());
+                    }
+                    if (result.getRawBytes() != null) {
+                        logBuilder.append(",getRawBytes:" + Base64.encodeToString(result.getRawBytes(), padding));
+                    }
                     Intent i = new Intent();
-                    i.putExtra("info", testStr);
+                    i.putExtra("info", logBuilder.toString().trim());
                     setResult(0x02, i);
                     finish();
                     return;
@@ -400,7 +425,7 @@ public class UsbActivity extends BaseActivity {
             @Override
             public void onSuccess(FingerResult result) {
                 String fea = Base64.encodeToString(result.getTemplate(),
-                        Base64.NO_WRAP);
+                        padding);
                 byte[] feature = result.getTemplate();
 
                 showFingerImg(result.getImgBytes());
