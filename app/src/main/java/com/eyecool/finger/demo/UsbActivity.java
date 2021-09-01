@@ -39,6 +39,7 @@ import java.io.IOException;
  */
 public class UsbActivity extends BaseActivity {
 
+    /* 应用间调试用*/
     private static final String TAG = UsbActivity.class.getSimpleName();
 
     private static final String BASE_PATH = Environment
