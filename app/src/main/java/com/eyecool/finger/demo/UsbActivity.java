@@ -333,7 +333,8 @@ public class UsbActivity extends BaseActivity {
                 String testStr = Base64.encodeToString(result.getTemplate(), padding);
 
                 StringBuilder logBuilder = new StringBuilder();
-                logBuilder.append("template-- " + testStr);
+                logBuilder.append("template-Base64- " + testStr);
+                logBuilder.append(" ，template-str- " + new String(mTemplate));
                 if (type > 0) {
                     if (result.getCompressRawBytes() != null) {
                         logBuilder.append(",getCompressRawBytes-- " + Base64.encodeToString(result.getCompressRawBytes(), padding));

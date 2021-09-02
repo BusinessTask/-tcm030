@@ -1,10 +1,11 @@
 package com.eyecool.finger.demo.base;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout.LayoutParams;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.eyecool.finger.demo.utils.MeasureUtil;
 
