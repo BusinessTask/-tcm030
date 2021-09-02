@@ -371,8 +371,7 @@ public class UsbActivity extends BaseActivity {
 
             @Override
             public void onSuccess(FingerResult result) {
-                String fea = Base64.encodeToString(result.getTemplate(),
-                        Base64.NO_WRAP);
+//                String fea = Base64.encodeToString(result.getTemplate(), Base64.NO_WRAP);
                 byte[] feature = result.getTemplate();
 
                 showFingerImg(result.getImgBytes());
